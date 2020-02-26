@@ -1,0 +1,15 @@
+Commits on Oct 6, 2019
+
+    fix gocode update_cache recover
+    @visualfc
+    visualfc committed on 6 Oct 2019
+
+go get 下载第三方包golang gin框架时，会去下载gopkg.in/go-playground/validator.v8包以及gopkg.in/yaml.v2包，gopkg.in站点下的包都是中间包，最终的包代码是在github上，于是直接到github.com上去下载，对应的真实代码地址是：
+https://github.com/go-playground/validator/tree/v8.18.2
+https://github.com/go-yaml/yaml/tree/v2.2.1
+于是，我直接go get github.com/go-playground/validator 以及 go get github.com/go-yaml/yaml来获取，能够顺利下载包，但是在编译自己代码时会报错，仔细看了下是由于下载的包版本不对，并没有下载我们想要的版本，go get直接下载的是最新版本
+解决方法
+
+直接用git clone的方式去下载特定tag版本的代码，然后拷贝到相应的包目录下边
+git clone --branch v8.18.2 https://github.com/go-playground/validator.git
+git clone --branch v2.2.1 https://github.com/go-yaml/yaml.git
